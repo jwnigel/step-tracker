@@ -23,18 +23,18 @@ enum HealthMetric: CaseIterable, Identifiable {
 
 
 struct DashboardView: View {
-
+    
     @Environment(HealthKitManager.self) private var hkManager
     @AppStorage("hasSeenPermissionPriming") private var hasSeenPermissionPriming = false
     @State private var isShowingPermissionPrimingSheet = false
     @State private var selectedMetric: HealthMetric = .steps
     var isSteps: Bool { selectedMetric == .steps }
-
+    
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
-        
+                    
                     Picker("Selected Metric", selection: $selectedMetric) {
                         ForEach(HealthMetric.allCases) { metric in
                             Text(metric.title)
@@ -93,7 +93,7 @@ struct DashboardView: View {
             }
             .padding()
             .task {
-//                await hkManager.addSimulatorData()
+                
                 isShowingPermissionPrimingSheet = !hasSeenPermissionPriming
             }
             .navigationTitle("Dashboard")
