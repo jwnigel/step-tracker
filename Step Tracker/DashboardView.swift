@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
+import Charts
 
 
-enum HealthMetric: CaseIterable, Identifiable {
+enum selectedHealthMetric: CaseIterable, Identifiable {
     case steps, weight
     var id: Self { self }
     var title: String {
@@ -27,7 +28,7 @@ struct DashboardView: View {
     @Environment(HealthKitManager.self) private var hkManager
     @AppStorage("hasSeenPermissionPriming") private var hasSeenPermissionPriming = false
     @State private var isShowingPermissionPrimingSheet = false
-    @State private var selectedMetric: HealthMetric = .steps
+    @State private var selectedMetric: selectedHealthMetric = .steps
     var isSteps: Bool { selectedMetric == .steps }
     
     var body: some View {
@@ -36,7 +37,7 @@ struct DashboardView: View {
                 VStack(spacing: 20) {
                     
                     Picker("Selected Metric", selection: $selectedMetric) {
-                        ForEach(HealthMetric.allCases) { metric in
+                        ForEach(selectedHealthMetric.allCases) { metric in
                             Text(metric.title)
                         }
                     }
@@ -59,9 +60,15 @@ struct DashboardView: View {
                         .foregroundStyle(.secondary)
                         .padding(.bottom, 12)
                         
-                        RoundedRectangle(cornerRadius: 12)
-                            .foregroundStyle(.secondary)
-                            .frame(height: 150)
+                        Chart {
+                            ForEach(hkManager.stepData) { steps in
+                                BarMark(
+                                    x: .value("Date", steps.date, unit: .day),
+                                    y: .value("Steps", steps.value)
+                                )
+                            }
+                        }
+                        .frame(height: 150)
                         
                     }
                     .padding()
@@ -93,11 +100,11 @@ struct DashboardView: View {
             }
             .padding()
             .task {
-                
+                await hkManager.fetchStepCount()
                 isShowingPermissionPrimingSheet = !hasSeenPermissionPriming
             }
             .navigationTitle("Dashboard")
-            .navigationDestination(for: HealthMetric.self) { metric in
+            .navigationDestination(for: selectedHealthMetric.self) { metric in
                 HealthDataListView(metric: metric)
             }
             .sheet(isPresented: $isShowingPermissionPrimingSheet, onDismiss: {

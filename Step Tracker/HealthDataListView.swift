@@ -13,7 +13,7 @@ struct HealthDataListView: View {
     @State private var addDataDate: Date = Date.now
     @State private var valueToAdd: String = ""
     
-    var metric: HealthMetric
+    var metric: selectedHealthMetric
     
     var body: some View {
         List(0..<28) { i in
