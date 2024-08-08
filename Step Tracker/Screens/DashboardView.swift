@@ -72,6 +72,7 @@ struct DashboardView: View {
             .padding()
             .task {
                 await hkManager.fetchStepCount()
+                ChartMath.averageWeekdayCount(for: hkManager.stepData)
                 isShowingPermissionPrimingSheet = !hasSeenPermissionPriming
             }
             .navigationTitle("Dashboard")
@@ -89,7 +90,7 @@ struct DashboardView: View {
     }    
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct DashboardView_Previews: PreviewProvider {
     static var previews: some View {
         DashboardView()
             .environment(HealthKitManager())
