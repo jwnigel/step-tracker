@@ -12,7 +12,12 @@
 		D89421952C4BD59E00484507 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D89421942C4BD59E00484507 /* Assets.xcassets */; };
 		D89421982C4BD59E00484507 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D89421972C4BD59E00484507 /* Preview Assets.xcassets */; };
 		D89FF3512C59D47200557AF0 /* HealthDataListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89FF3502C59D47200557AF0 /* HealthDataListView.swift */; };
+		D8D05B1E2C656B2F0042EE38 /* StepPieChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D05B1D2C656B2F0042EE38 /* StepPieChart.swift */; };
 		D8D5FB5B2C64503B00B3AE7F /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D5FB5A2C64503B00B3AE7F /* BarChartView.swift */; };
+		D8D5FB612C64573100B3AE7F /* ChartMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D5FB602C64573100B3AE7F /* ChartMath.swift */; };
+		D8D5FB632C64577800B3AE7F /* ChartDataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D5FB622C64577800B3AE7F /* ChartDataTypes.swift */; };
+		D8D5FB662C64587200B3AE7F /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D5FB652C64587200B3AE7F /* Date+Ext.swift */; };
+		D8D5FB692C645C8600B3AE7F /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = D8D5FB682C645C8600B3AE7F /* Algorithms */; };
 		D8D8C0E92C5D8C0F007CDBEE /* HealthkitPermissionPrimingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D8C0E82C5D8C0F007CDBEE /* HealthkitPermissionPrimingView.swift */; };
 		D8D8C0F12C5D986B007CDBEE /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D8C0F02C5D986B007CDBEE /* HealthKitManager.swift */; };
 		D8D8C11B2C607048007CDBEE /* HealthMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D8C11A2C607047007CDBEE /* HealthMetric.swift */; };
@@ -25,7 +30,11 @@
 		D89421942C4BD59E00484507 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D89421972C4BD59E00484507 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D89FF3502C59D47200557AF0 /* HealthDataListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthDataListView.swift; sourceTree = "<group>"; };
+		D8D05B1D2C656B2F0042EE38 /* StepPieChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepPieChart.swift; sourceTree = "<group>"; };
 		D8D5FB5A2C64503B00B3AE7F /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
+		D8D5FB602C64573100B3AE7F /* ChartMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartMath.swift; sourceTree = "<group>"; };
+		D8D5FB622C64577800B3AE7F /* ChartDataTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDataTypes.swift; sourceTree = "<group>"; };
+		D8D5FB652C64587200B3AE7F /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		D8D8C0E82C5D8C0F007CDBEE /* HealthkitPermissionPrimingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthkitPermissionPrimingView.swift; sourceTree = "<group>"; };
 		D8D8C0EE2C5D90F6007CDBEE /* Step Tracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Step Tracker.entitlements"; sourceTree = "<group>"; };
 		D8D8C0EF2C5D91E6007CDBEE /* Step-Tracker-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Step-Tracker-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -38,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8D5FB692C645C8600B3AE7F /* Algorithms in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +73,7 @@
 		D894218F2C4BD59D00484507 /* Step Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				D8D5FB642C64585D00B3AE7F /* Extensions */,
 				D8D5FB5F2C64543A00B3AE7F /* Manager */,
 				D8D5FB5E2C64543400B3AE7F /* Model */,
 				D8D5FB5D2C64540A00B3AE7F /* Charts */,
@@ -98,6 +109,9 @@
 			isa = PBXGroup;
 			children = (
 				D8D5FB5A2C64503B00B3AE7F /* BarChartView.swift */,
+				D8D5FB602C64573100B3AE7F /* ChartMath.swift */,
+				D8D5FB622C64577800B3AE7F /* ChartDataTypes.swift */,
+				D8D05B1D2C656B2F0042EE38 /* StepPieChart.swift */,
 			);
 			path = Charts;
 			sourceTree = "<group>";
@@ -118,6 +132,14 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
+		D8D5FB642C64585D00B3AE7F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D8D5FB652C64587200B3AE7F /* Date+Ext.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -134,6 +156,9 @@
 			dependencies = (
 			);
 			name = "Step Tracker";
+			packageProductDependencies = (
+				D8D5FB682C645C8600B3AE7F /* Algorithms */,
+			);
 			productName = "Step Tracker";
 			productReference = D894218D2C4BD59D00484507 /* Step Tracker.app */;
 			productType = "com.apple.product-type.application";
@@ -162,6 +187,9 @@
 				Base,
 			);
 			mainGroup = D89421842C4BD59D00484507;
+			packageReferences = (
+				D8D5FB672C645C8600B3AE7F /* XCRemoteSwiftPackageReference "swift-algorithms" */,
+			);
 			productRefGroup = D894218E2C4BD59D00484507 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -194,7 +222,11 @@
 				D8D8C0F12C5D986B007CDBEE /* HealthKitManager.swift in Sources */,
 				D8D5FB5B2C64503B00B3AE7F /* BarChartView.swift in Sources */,
 				D8D8C0E92C5D8C0F007CDBEE /* HealthkitPermissionPrimingView.swift in Sources */,
+				D8D5FB612C64573100B3AE7F /* ChartMath.swift in Sources */,
 				D8D8C11B2C607048007CDBEE /* HealthMetric.swift in Sources */,
+				D8D5FB632C64577800B3AE7F /* ChartDataTypes.swift in Sources */,
+				D8D05B1E2C656B2F0042EE38 /* StepPieChart.swift in Sources */,
+				D8D5FB662C64587200B3AE7F /* Date+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +435,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D8D5FB672C645C8600B3AE7F /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D8D5FB682C645C8600B3AE7F /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D8D5FB672C645C8600B3AE7F /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D89421852C4BD59D00484507 /* Project object */;
 }
