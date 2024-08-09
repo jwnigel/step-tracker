@@ -116,5 +116,5 @@ struct BarChartView: View {
 }
 
 #Preview {
-    BarChartView(selectedMetric: .steps, chartData: HealthMetric.mockData)
+    BarChartView(selectedMetric: .steps, chartData: MockData.steps)
 }
