@@ -1,27 +1,19 @@
 //
-//  BarChartView.swift
+//  WeightLineChart.swift
 //  Step Tracker
 //
-//  Created by Nigel Wright on 8/7/24.
+//  Created by Nigel Wright on 8/8/24.
 //
 
 import SwiftUI
 import Charts
 
-struct BarChartView: View {
+struct WeightLineChart: View {
     
     @State private var rawSelectedDate: Date?
     
     var selectedMetric: HealthMetricContext
     var chartData: [HealthMetric]
-    
-    var avgStepCount: Double {
-        guard !chartData.isEmpty else { return 0 }
-        let totalSteps = chartData.reduce(0) { subTotal, steps in
-            subTotal + steps.value
-        }
-        return totalSteps / Double(chartData.count)
-    }
     
     var tappedHealthMetric: HealthMetric? {
         guard let rawSelectedDate else { return nil }
@@ -30,15 +22,19 @@ struct BarChartView: View {
         }
     }
     
+    var minValue: Double {
+        chartData.map { $0.value }.min() ?? 0
+    }
+    
     var body: some View {
         VStack {
             NavigationLink(value: selectedMetric) {
                 HStack {
                     VStack(alignment: .leading) {
-                        Label("Steps", systemImage: "figure.walk")
+                        Label("Weight", systemImage: "figure")
                             .font(.title3.bold())
-                            .foregroundStyle(.pink)
-                        Text("Avg: \(Int(avgStepCount))")
+                            .foregroundStyle(.indigo)
+                        Text("Avg: 180 lbs")
                             .font(.caption)
                     }
                     Spacer()
@@ -56,25 +52,32 @@ struct BarChartView: View {
                         .annotation(
                             position: .top,
                             spacing: 0,
-                            overflowResolution: .init(x: .fit(to: .chart), y: .disabled))
-                    {
-                        annotationView
-                    }
+                            overflowResolution: .init(x: .fit(to: .chart), y: .disabled)) { annotationView }
                 }
+                RuleMark(y: .value("Goal", 171))
+                    .foregroundStyle(.mint)
+                    .lineStyle(.init(lineWidth: 1, dash: [5]))
                 
-                RuleMark(y: .value("Average", avgStepCount))
-                    .foregroundStyle(Color.secondary)
-                    .lineStyle(.init(lineWidth: 1, dash: [4]))
-                
-                ForEach(chartData) { steps in
-                    BarMark(
-                        x: .value("Date", steps.date, unit: .day),
-                        y: .value("Steps", steps.value)
+                ForEach(chartData) { weight in
+                    AreaMark(
+                        x: .value("Day", weight.date, unit: .day),
+                        yStart: .value("Value", weight.value),
+                        yEnd: .value("Min Value", minValue)
                     )
-                    .foregroundStyle(.pink.gradient)
-                    .opacity(rawSelectedDate == nil || steps.date == tappedHealthMetric?.date ? 1.0 : 0.3)
+                    .foregroundStyle(Gradient(colors: [.indigo.opacity(0.5), .clear]))
+                    
+                    LineMark(
+                        x: .value("Day", weight.date, unit: .day),
+                        y: .value("Value", weight.value)
+                    )
+                    .foregroundStyle(.indigo)
+                    .interpolationMethod(.catmullRom)
+                    .symbol(.circle)
                 }
             }
+            .frame(height: 150)
+            .chartXSelection(value: $rawSelectedDate)
+            .chartYScale(domain: .automatic(includesZero: false))
             .chartXAxis {
                 AxisMarks {
                     AxisValueLabel(format: .dateTime.month(.defaultDigits).day())
@@ -84,12 +87,10 @@ struct BarChartView: View {
                 AxisMarks { value in
                     AxisGridLine()
                         .foregroundStyle(Color.secondary.opacity(0.3))
-                    
-                    AxisValueLabel((value.as(Double.self) ?? 0).formatted(.number.notation(.compactName)))
+                    AxisValueLabel()
                 }
             }
-            .frame(height: 150)
-            .chartXSelection(value: $rawSelectedDate.animation(.easeInOut))
+            
         }
         .padding()
         .background(RoundedRectangle(cornerRadius: 12).fill(Color(.secondarySystemBackground)))
@@ -102,9 +103,9 @@ struct BarChartView: View {
             .font(.footnote.bold())
             .foregroundStyle(.secondary)
             
-            Text(tappedHealthMetric?.value ?? 0, format: .number.precision(.fractionLength(0)))
+            Text(tappedHealthMetric?.value ?? 0, format: .number.precision(.fractionLength(1)))
                 .fontWeight(.heavy)
-                .foregroundStyle(.pink)
+                .foregroundStyle(.indigo)
             
         }
         .padding(12)
@@ -116,5 +117,5 @@ struct BarChartView: View {
 }
 
 #Preview {
-    BarChartView(selectedMetric: .steps, chartData: MockData.steps)
+    WeightLineChart(selectedMetric: .weight, chartData: MockData.weights)
 }
