@@ -13,7 +13,7 @@ struct HealthDataListView: View {
     @State private var isShowingAddData: Bool = false
     @State private var addDataDate: Date = Date.now
     @State private var valueToAdd: String = ""
-    
+        
     var metric: HealthMetricContext
     
     var listData: [HealthMetric] {
@@ -60,12 +60,27 @@ struct HealthDataListView: View {
                     Button("Add Data") {
                         Task {
                             if metric == .steps {
-                                await hkManager.addStepData(for: addDataDate, value: Double(valueToAdd)!)
-                                await hkManager.fetchStepCount()
+                                do {
+                                    try await hkManager.addStepData(for: addDataDate, value: Double(valueToAdd)!)
+                                    try await hkManager.fetchStepCount()
+                                    isShowingAddData = false
+                                } catch STError.sharingDenied(let quantityType) {
+                                    print("❌ Sharing denied for \(quantityType)")
+                                } catch {
+                                    print("❌ Data list view unable to complete request")
+                                }
+                                
                             } else {
-                                await hkManager.addWeightData(for: addDataDate, value: Double(valueToAdd)!)
-                                await hkManager.fetchWeights()
-                                await hkManager.fetchWeightDiffData()
+                                do {
+                                    try await hkManager.addWeightData(for: addDataDate, value: Double(valueToAdd)!)
+                                    try await hkManager.fetchWeights()
+                                    try await hkManager.fetchWeightDiffData()
+                                    isShowingAddData = false
+                                } catch STError.sharingDenied(let quantityType) {
+                                    print("❌ Sharing denied for \(quantityType)")
+                                } catch {
+                                    print("❌ Data list view unable to complete request")
+                                }
                             }
                         }
                     }
@@ -78,8 +93,8 @@ struct HealthDataListView: View {
             }
         }
     }
-    
 }
+
 
 #Preview {
     HealthDataListView(metric: .weight)
